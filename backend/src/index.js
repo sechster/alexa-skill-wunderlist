@@ -20,7 +20,7 @@ exports.handler = function(event, context, callback) {
 const handlers = {
     'LaunchRequest': function () {
         console.log("Wunderlist assistant: LaunchRequest.");
-        this.emit('WhatToWearIntent');
+        this.emit('AddTaskIntent');
     },
     'Unhandled': function() {
         console.log("Wunderlist assistant: Unhandled.");
@@ -105,12 +105,6 @@ function delegateSlotCollection(event, emit){
     } else if (event.request.dialogState !== "COMPLETED") {
         emit(":delegate");
     }
-}
-
-function areAllSlotsValid(request) {
-    return isSlotValid(request, "listName")
-        && isSlotValid(request, "taskName")
-        && isSlotValid(request, "dueDate");
 }
 
 function isSlotValid(request, slotName) {
