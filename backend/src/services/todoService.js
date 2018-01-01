@@ -4,19 +4,34 @@ module.exports = function toDoService(externalToDoService) {
 
     function addTask(listName, task) {
         return getListId(listName)
-            .then(listId => externalToDoService.addTask(listId, task))
+            .then(function(listId) { 
+                if (listId == null) {
+                    return null;
+                }
+                return externalToDoService.addTask(listId, task); })
             .catch(err => console.error(err));
     }
 
     function listTasks(listName) {
         return getListId(listName)
-            .then(listId => externalToDoService.listTasks(listId))
+            .then(function(listId) { 
+                if (listId == null) {
+                    return null;
+                }
+                return externalToDoService.listTasks(listId); })
             .catch(err => console.error(err));
     }
 
     function getListId(listName) {
         return externalToDoService.getAllLists()
-            .then(lists => lists.find(x => x.title.toLowerCase() == listName.toLowerCase()).id)
+            .then(function(lists) { 
+                let list = lists.find(x => x.title.toLowerCase() == listName.toLowerCase());
+                if (list === undefined) {
+                    return null;
+                } else {
+                    return list.id;
+                } 
+            })
             .catch(err => console.error(err));
     }
 

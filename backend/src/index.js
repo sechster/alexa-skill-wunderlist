@@ -74,10 +74,14 @@ const handlers = {
 
             toDoServiceInstance.listTasks(listName)
                 .then(function(tasks) { 
-                    console.log(JSON.stringify(tasks));
-                    let concatenatedTasks = tasks.map(x => x.title).reduce((a, b) =>  a + ", " + b);
-                    self.response.speak(`On list ${listName} you have ${concatenatedTasks}.`);
-                    self.emit(':responseReady'); }
+                    if (tasks == null) {
+                        self.response.speak(`There is no list with name: ${listName}.`);
+                        self.emit(':responseReady');                       
+                    } else {
+                        let concatenatedTasks = tasks.map(x => x.title).reduce((a, b) =>  a + ", " + b);
+                        self.response.speak(`On list ${listName} you have ${concatenatedTasks}.`);
+                        self.emit(':responseReady'); }
+                    }
                 );
         }
     },
