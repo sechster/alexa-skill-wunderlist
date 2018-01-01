@@ -1,0 +1,176 @@
+{
+  "languageModel": {
+    "types": [
+      {
+        "name": "dueDate",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "tomorrow",
+              "synonyms": []
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "today",
+              "synonyms": []
+            }
+          }
+        ]
+      },
+      {
+        "name": "listName",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "inbox",
+              "synonyms": []
+            }
+          }
+        ]
+      },
+      {
+        "name": "taskName",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "water the plants",
+              "synonyms": []
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "test",
+              "synonyms": []
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AddTaskIntent",
+        "samples": [
+          "add task {taskName}",
+          "add task {taskName} due {dueDate}",
+          "add new task {taskName}",
+          "add new task {taskName} due {dueDate}"
+        ],
+        "slots": [
+          {
+            "name": "listName",
+            "type": "listName"
+          },
+          {
+            "name": "taskName",
+            "type": "taskName"
+          },
+          {
+            "name": "dueDate",
+            "type": "dueDate"
+          }
+        ]
+      },
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "ListTasksIntent",
+        "samples": [
+          "what is on my {listName} list"
+        ],
+        "slots": [
+          {
+            "name": "listName",
+            "type": "listName"
+          }
+        ]
+      }
+    ],
+    "invocationName": "wunderlist"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-AddTaskIntent.IntentSlot-taskName",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What is the task's name?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-ListTasksIntent.IntentSlot-listName",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "what is the list's name?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "AddTaskIntent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "listName",
+            "type": "listName",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "taskName",
+            "type": "taskName",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-AddTaskIntent.IntentSlot-taskName"
+            }
+          },
+          {
+            "name": "dueDate",
+            "type": "dueDate",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          }
+        ]
+      },
+      {
+        "name": "ListTasksIntent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "listName",
+            "type": "listName",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-ListTasksIntent.IntentSlot-listName"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
